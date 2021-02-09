@@ -37,6 +37,9 @@ nav ul{
 	margin: 0;
 	overflow: auto;
 }
+nav ul:hover{
+	background-color:black;
+}
 nav li{
 	height: 30px;
 	margin-right: 10px;
@@ -61,13 +64,13 @@ h1, h2{
 	text-shadow: 2px 2px 8px #FF0000;
 }
 h1{
-	font-size: 60px;
+	font-size: 40px;
 	text-transform: uppercase
 }
 h2{
-	font-size: 50px;
+	font-size: 30px;
 }
-h1, h2 article{
+article{
 	padding: 20px;
 }
 #flight-statuses{
