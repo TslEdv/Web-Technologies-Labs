@@ -23,16 +23,19 @@ header{
 	background-color:rgba(149, 165, 166, 0.8);
 }
 nav{
-	margin-top: 120px;
-	margin-bottom: 0px;
+	margin-top: 0;
+	margin-bottom: 0;
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
-	width: 800px;
+	width: 680px;
+	top: 120px;
 }
 nav ul{
-	list-style-type: none;
-	margin: 0px;
+	background-color:pink;
+	list-style: none;
+	margin: 0;
+	overflow: auto;
 }
 nav li{
 	height: 30px;
