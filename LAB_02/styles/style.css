@@ -112,3 +112,12 @@ td.departed{
 td.departed::after{
 	content: '\2708';
 }
+footer{
+	margin-top: 150px; !important
+}
+footer:before {
+    clear: both;
+    display: block;
+    height: 120px;
+    min-height: 120px;
+}
