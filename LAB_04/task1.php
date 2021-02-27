@@ -1,11 +1,11 @@
 <?php
 function getKey($testKey, &$arr){
-	$counter = 0;
+	$keyCount = 0;
 	for($i = 0; $i<sizeof($arr); $i++){
 		if ($arr[$i] === $testKey){
-			$counter++;
-			if ($counter > 1){
-				$arr[$i] .= chr(63 + $counter);
+			$keyCount++;
+			if ($keyCount > 1){
+				$arr[$i] .= chr(63 + $keyCount);
 			}
 		}
 	}
@@ -21,13 +21,9 @@ for ($i = 0; $i<$numOfDistances; $i++){
 print_r($arrDistances);
 sort($arrDistances);
 print_r($arrDistances);
-foreach($arrDistances as $value){
-    getKey($value, $arrDistances);
-}
-print_r($arrDistances);
 $arrMiles = array();
 for ($i = 0; $i < sizeof($arrDistances); $i++){
-    $arrMiles[getKey($arrDistances[$i], $arrDistances)] = $arrDistances[$i] / KM_TO_MILES;
+    $arrMiles[getKey($arrDistances[$i], $arrDistances)] = intval($arrDistances[$i], 10) / KM_TO_MILES;
 }
 print_r($arrMiles);
 printf("KM\tMILES\n\r");
