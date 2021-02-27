@@ -1,4 +1,16 @@
 <?php
+function getKey($testKey, &$arr){
+	$counter = 0;
+	for($i = 0; $i<sizeof($arr); $i++){
+		if ($arr[$i] === $testKey){
+			$counter++;
+			if ($counter > 1){
+				$arr[$i] .= chr(63 + $counter);
+			}
+		}
+	}
+	return $testKey;
+}
 error_reporting(E_ALL);
 const KM_TO_MILES = 1.60934;
 $numOfDistances = rand (5, 20);
@@ -6,33 +18,20 @@ $arrDistances = array();
 for ($i = 0; $i<$numOfDistances; $i++){
     array_push($arrDistances, rand(1, 100));
 }
-echo print_r($arrDistances, true);
+print_r($arrDistances);
 sort($arrDistances);
-echo print_r($arrDistances, true);
+print_r($arrDistances);
+foreach($arrDistances as $value){
+    getKey($value, $arrDistances);
+}
+print_r($arrDistances);
 $arrMiles = array();
 for ($i = 0; $i < sizeof($arrDistances); $i++){
-    if($arrDistances[$i-1] == $arrDistances[$i]){
-        $result = $arrDistances[$i] * KM_TO_MILES;
-        array_push($arrMiles[$arrDistances[$i+100]], $arrDistances[$i]);
-        $arrMiles[$arrDistances[$i+100]] = $result;
-    }
-    else{
-    array_push($arrMiles[$arrDistances[$i]], $arrDistances[$i]);
-    $result = $arrDistances[$i] * KM_TO_MILES;
-    $arrMiles[$arrDistances[$i]] = $result;
-    }
+    $arrMiles[getKey($arrDistances[$i], $arrDistances)] = $arrDistances[$i] / KM_TO_MILES;
 }
-echo print_r($arrMiles, true);
-$counter = 0;
+print_r($arrMiles);
+printf("KM\tMILES\n\r");
 foreach ($arrMiles as $index => $value) {
-    $result = $value/KM_TO_MILES;
-    if ($counter==0){
-        printf("KM\tMILES\n");
-        printf("%d\t%0.3f\n", $result, $value);
-        $counter++;
-    }
-    else{
-        printf("%d\t%0.3f\n", $result, $value);
-    }
+    printf("%d\t%0.3f\n\r", $index, $value);
 }
 ?>
