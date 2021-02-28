@@ -26,8 +26,8 @@ for ($i = 0; $i < sizeof($arrDistances); $i++){
     $arrMiles[getKey($arrDistances[$i], $arrDistances)] = intval($arrDistances[$i], 10) / KM_TO_MILES;
 }
 print_r($arrMiles);
-printf("KM\tMILES\n\r");
+printf("%10s%10s\n\r", "KM", "MILES");
 foreach ($arrMiles as $index => $value) {
-    printf("%d\t%0.3f\n\r", $index, $value);
+    printf("%10d%10.3f\n\r", $index, $value);
 }
 ?>

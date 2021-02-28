@@ -15,11 +15,10 @@ function phonicsCount($text, $vowels){
     return $newarray;
 }
 function charCount($text){
-    $text = preg_replace('/\s+/', '', $text);
     $textarr = str_split($text);
     $counter = 0;
-    for ($i = 0; $i < sizeof($textarr); $i++){
-        if ($textarr[$i] != ' '){
+    foreach($textarr as $char){
+        if(!ctype_space($char) && !ctype_cntrl($char)){
             $counter++;
         }
     }
