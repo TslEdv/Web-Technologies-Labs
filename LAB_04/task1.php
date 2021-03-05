@@ -1,17 +1,17 @@
 <?php
 function getKey($testKey, &$arr){
-	$keyCount = 0;
-	while(TRUE){
-		$i = 0;
-		if (array_key_exists($testKey, $arr)){
-			$testKey = $testKey.chr(65 + $i);
-			$i++;
-		}
-		else{
-			break;
-		}
-	}
-	return $testKey;
+    $keyCount = 0;
+    while(TRUE){
+        $i = 0;
+        if (array_key_exists($testKey, $arr)){
+            $testKey = $testKey.chr(65 + $i);
+            $i++;
+        }
+        else{
+            break;
+        }
+    }
+    return $testKey;
 }
 error_reporting(E_ALL);
 const KM_TO_MILES = 1.60934;
