@@ -28,7 +28,7 @@
         <option value="dr">Dr</option>
     </select><br>
     <label for="age">Age:</label>
-    <input type="number" id="age" name="age" min=18 pattern="[0-9]+" required><br>
+    <input type="number" id="age" name="age" min="18" pattern="[0-9]+" required><br>
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
     <label for="phone">Enter a phone number:</label>
@@ -42,7 +42,7 @@
 <?php
 if(isset($_POST['submit'])){
     foreach($_REQUEST as $var){
-        if(strpos($var, ",")){
+        if(str_contains($var, ",")){
             exit("Invalid input!");
         }
     }
