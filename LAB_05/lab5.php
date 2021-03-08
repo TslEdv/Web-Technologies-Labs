@@ -48,6 +48,21 @@ if(isset($_POST['submit'])){
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if(isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['age']) && isset($_POST['email']) && isset($_POST['arrival'])){
+            if(isset($_POST['mname'])){
+                if(!preg_match("/^[a-zA-z-.]*$/", $_POST['mname'])){
+                    exit("Wrong!");
+                }
+            }
+            if(isset($_POST['phone'])){
+                if(!preg_match("/^[0-9+]*$/", $_POST['phone'])){
+                    exit("Wrong!");
+                }
+            }
+            if(isset($_POST['salutation'])){
+                if(!in_array($_POST['salutation'], array("", "mr", "ms", "mrs", "sir", "prof", "dr"))){
+                    exit("Wrong!");
+                }
+            }
             $email_pattern = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$^";
             $date_pattern = '/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/';
             if (!preg_match("/^[a-zA-z-.]*$/", $_POST['fname']) || !preg_match("/^[a-zA-z-.]*$/", $_POST['lname']) || !preg_match ($email_pattern, $_POST['email']) || !preg_match($date_pattern, $_POST['arrival'])){
