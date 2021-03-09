@@ -34,7 +34,7 @@
     <label for="phone">Enter a phone number:</label>
     <input type="tel" id="phone" name="phone" placeholder="Phone number"><br>
     <label for="arrival">Arrival date:</label>
-    <input type="date" id="arrival" name="arrival" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>" max="2021-06-06" required><br>
+    <input type="date" id="arrival" name="arrival" value="<?php echo date("Y-m-d"); ?>" min="<?php echo date("Y-m-d"); ?>" max="<?php echo date("Y-m-d", strtotime('+2 months')); ?>" required><br>
     <input type="submit" value="Submit" name="submit">
 </form>
 </body>
