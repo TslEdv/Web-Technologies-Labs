@@ -27,7 +27,9 @@ class CourseActions{
                 }
             }
             for ($i = 0; $i < count($filcourses); $i++){
-                usort($filcourses, fn($a, $b) => intval($b->ects) <=> intval($a->ects));
+                usort($filcourses, function($a, $b) {
+                    return strnatcmp($b->ects, $a->ects);
+                });
             }
             return $filcourses;
         }
@@ -45,7 +47,9 @@ class CourseActions{
                     }
                 }
                 for ($i = 0; $i < count($filcourses); $i++){
-                    usort($filcourses, fn($a, $b) => intval($b->ects) <=> intval($a->ects));
+                    usort($filcourses, function($a, $b) {
+                        return strnatcmp($b->ects, $a->ects);
+                    });
                 }
             } else if ($semester == "1"){
                 foreach($list as $course){
@@ -54,7 +58,9 @@ class CourseActions{
                     }
                 }
                 for ($i = 0; $i < count($filcourses); $i++){
-                    usort($filcourses, fn($a, $b) => intval($b->ects) <=> intval($a->ects));
+                    usort($filcourses, function($a, $b) {
+                        return strnatcmp($b->ects, $a->ects);
+                    });
                 }
             } else{
                 foreach($list as $course){
@@ -63,7 +69,9 @@ class CourseActions{
                     }
                 }
                 for ($i = 0; $i < count($filcourses); $i++){
-                    usort($filcourses, fn($a, $b) => intval($b->ects) <=> intval($a->ects));
+                    usort($filcourses, function($a, $b) {
+                        return strnatcmp($b->ects, $a->ects);
+                    });
                 }
             }
             return $filcourses;
