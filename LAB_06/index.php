@@ -13,9 +13,17 @@ class CourseActions{
             $id = strtoupper($id);
             $filcourses = array();
             $courses = generateCourses();
-            foreach($courses as $course){
-                if (substr($course->code, 0, 3) == $id){
-                    array_push($filcourses, $course);
+            if($id == "I00"){
+                foreach($courses as $course){
+                    if ($course->code[0] == "I" && is_numeric($course->code[1]) && is_numeric($course->code[2])){
+                        array_push($filcourses, $course);
+                    }
+                }
+            } else{
+                foreach($courses as $course){
+                    if (substr($course->code, 0, 3) == $id){
+                        array_push($filcourses, $course);
+                    }
                 }
             }
             for ($i = 0; $i < count($filcourses); $i++){
