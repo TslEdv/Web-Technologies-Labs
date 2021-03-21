@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>{TITLE}</h1>
-    <h1>You can filter by adding query or semester to the link<h1>
+    <h3>You can filter by adding query or semester to the link</h3>
     <div>{TABLE}</div>
 </body>
 </html>
