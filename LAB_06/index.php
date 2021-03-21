@@ -6,7 +6,7 @@ class Course {
     public $term;
 }
 class CourseActions{
-    function filter($id){ // add decending order as well
+    function filter($id){
         if (strlen($id) > 3){
             exit("ID TOO LONG");
         } else{
