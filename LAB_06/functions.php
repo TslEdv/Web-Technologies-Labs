@@ -8,12 +8,12 @@ class Course {
     function __construct($code, $name, $ects, $term){
         $this->code = $code;
         $this->name = $name;
-        $this->ects = floatval($ects);
+        $this->ects = $ects;
         $this->term = $term;
     }
 }
 class CourseActions{
-    function filter($id){
+    static function filter($id){
         if (strlen($id) > 3){
             exit("ID TOO LONG");
         } else{
@@ -41,7 +41,7 @@ class CourseActions{
             return $filcourses;
         }
     }
-    function filterbysemester($semester, $list){
+    static function filterbysemester($semester, $list){
         $semester = strtolower($semester);
         if(!in_array($semester, array("0", "1", "2"))){
             exit("Semester does not exist! Recheck your input: 0 = autumn || 1 = spring || 2 = autumn-spring");
@@ -97,16 +97,14 @@ function generateCourses(){
 }
 function getCourseTable(){
     if (isset($_GET["query"])){
-        $action = new CourseActions;
-        $filtered = $action -> filter($_GET["query"]);
+        $filtered = CourseActions::filter($_GET["query"]);
         if (isset($_GET["semester"])){
-            $filtered = $action -> filterbysemester($_GET["semester"], $filtered);
+            $filtered = CourseActions::filterbysemester($_GET["semester"], $filtered);
         }
         return $filtered;
     } else if ((!isset($_GET["query"])) && (isset($_GET["semester"]))){
         $array = generateCourses();
-        $action = new CourseActions;
-        $filtered = $action -> filterbysemester($_GET["semester"], $array);
+        $filtered = CourseActions::filterbysemester($_GET["semester"], $array);
         return $filtered;
     } else{
         $array = generateCourses();
