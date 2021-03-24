@@ -4,6 +4,13 @@ class Course {
     public $name;
     public $ects;
     public $term;
+
+    function __construct($code, $name, $ects, $term){
+        $this->code = $code;
+        $this->name = $name;
+        $this->ects = floatval($ects);
+        $this->term = $term;
+    }
 }
 class CourseActions{
     function filter($id){
@@ -82,12 +89,8 @@ function generateCourses(){
     $courses = array();
     $csvline = explode(PHP_EOL, file_get_contents("data/courses.csv")); 
     foreach ($csvline as $line) {
-        $course = new Course;
         $parameters = explode(";", $line);
-        $course->code = $parameters[0];
-        $course->name = $parameters[1];
-        $course->ects = $parameters[2];
-        $course->term = $parameters[3];
+        $course = new Course($parameters[0], $parameters[1], $parameters[2], $parameters[3]);
         array_push($courses, $course);
     }
     return $courses;
