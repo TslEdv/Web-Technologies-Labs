@@ -11,7 +11,8 @@
         $_SESSION['name'] = "Edvin Ess";
         $_SESSION['age'] = "19";
         $_SESSION['location'] = "Tallinn";
-        echo "Session ID = ", session_id(), "<br>";
+        $_SESSION['id'] = session_id();
+        echo "Session ID = ", $_SESSION['id'], "<br>";
         echo "Welcome ", $_SESSION['name'], "! <br>";
         echo "Your age: ", $_SESSION['age'], "<br>";
         echo "Your location: ", $_SESSION['location'], "<br>";
