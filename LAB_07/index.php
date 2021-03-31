@@ -4,7 +4,7 @@ $longcounter = $_COOKIE['LongTimeCount'] + 1;
 $cookieContent = "Edvin";
 if (!isset($_COOKIE["ctransient"])){
     echo "There is no cookie named ctransient <br>";
-    setcookie("ctransient", $cookieContent);
+    setcookie("ctransient", $cookieContent, '/~edvess/');
 } else{
     echo "Cookie 'ctransient' = ", $cookieContent, "<br>";
 }
@@ -15,9 +15,9 @@ if (!isset($_COOKIE["LongTimeCount"])){
     $_COOKIE['ShortTimeCount'] = 0;
 }
 echo "ShortTimeCount = ", $shortcounter, "<br>";
-setcookie("ShortTimeCount", $shortcounter, time()+120);
+setcookie("ShortTimeCount", $shortcounter, time()+120, '/~edvess/');
 echo "LongTimeCount = ", $longcounter;
-setcookie("LongTimeCount", $longcounter, time()+3600);
+setcookie("LongTimeCount", $longcounter, time()+3600, '/~edvess/');
 ?>
 <!DOCTYPE html>
 
