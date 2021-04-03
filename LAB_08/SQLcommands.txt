@@ -90,14 +90,14 @@ SELECT D.student_name, D.student_code, C.course_code, C.ects_credits
 FROM declarations_201739 D LEFT JOIN courses_201739 C ON D.Courses_id=C.ID
 ORDER BY ects_credits DESC, student_name ASC;
 
-SELECT D.student_code, D.semesters_id, SUM(C.ects_credits)
+SELECT D.student_name, D.student_code, D.semesters_id, SUM(C.ects_credits)
 FROM declarations_201739 D LEFT JOIN courses_201739 C ON D.Courses_id=C.ID
-GROUP BY D.student_code, D.semesters_id
-ORDER BY D.student_code DESC;
+GROUP BY D.student_name, D.student_code, D.semesters_id
+ORDER BY D.student_name ASC;
 
 SELECT COUNT(*) as number_of_subjects
 FROM declarations_201739
-WHERE semesters_id=1;
+WHERE semesters_id=1 OR semesters_id=3;
 
 DROP TABLE test_201739;
 
