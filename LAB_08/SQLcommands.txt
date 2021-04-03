@@ -1,0 +1,104 @@
+mysql --host=anysql.itcollege.ee --user=team16 --password
+
+SHOW DATABASES;
+USE WT_16;
+SHOW TABLES;
+
+CREATE TABLE semesters_201739 (
+ID INT NOT NULL AUTO_INCREMENT,
+semester_name VARCHAR(20),
+PRIMARY KEY (ID),
+UNIQUE INDEX unique_NAME (semester_name ASC))
+ENGINE = MyISAM;
+
+CREATE TABLE declarations_201739 (
+ID INT NOT NULL AUTO_INCREMENT,
+courses_ID INT,
+semesters_ID INT,
+student_code VARCHAR(10),
+student_name VARCHAR(45),
+remarks VARCHAR(125),
+PRIMARY KEY (ID))
+ENGINE = MyISAM;
+
+CREATE TABLE test_201739 (
+ID INT NOT NULL AUTO_INCREMENT,
+grade TINYINT UNSIGNED,
+PRIMARY KEY (ID))
+ENGINE = MyISAM;
+
+INSERT INTO semesters_201739 (semester_name)
+VALUES ('autumn');
+
+INSERT INTO semesters_201739 (semester_name)
+VALUES ('spring');
+
+INSERT INTO semesters_201739 (semester_name)
+VALUES ('autumn - spring');
+
+SELECT * FROM courses;
+
+INSERT INTO declarations_201739 (courses_ID, semesters_ID, student_code, student_name, remarks)
+VALUES ('20', '1', '12345', 'Peeter Porgand', 'Estonian student');
+
+INSERT INTO declarations_201739 (courses_ID, semesters_ID, student_code, student_name, remarks)
+VALUES ('21', '2', '12345', 'Peeter Porgand', 'Estonian student');
+
+INSERT INTO declarations_201739 (courses_ID, semesters_ID, student_code, student_name, remarks)
+VALUES ('22', '3', '54123', 'Vlad Vodov', 'Russian student');
+
+INSERT INTO declarations_201739 (courses_ID, semesters_ID, student_code, student_name, remarks)
+VALUES ('23', '2', '77777', 'John Burgerson', 'American student');
+
+INSERT INTO declarations_201739 (courses_ID, semesters_ID, student_code, student_name, remarks)
+VALUES ('24', '1', '22222', 'Mario Luigi', 'Italian student');
+
+CREATE TABLE courses_201739 LIKE courses;
+
+INSERT INTO courses_201739 SELECT * FROM courses;
+
+SELECT DATA_TYPE 
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE 
+     TABLE_NAME = 'courses' AND 
+     COLUMN_NAME = 'old_credits';
+
+ALTER TABLE `courses_201739` MODIFY COLUMN `old_credits` FLOAT;
+
+UPDATE courses_201739
+SET old_credits= 1.5 * ects_credits;
+
+SELECT * FROM courses_201739;
+
+SELECT * 
+FROM courses_201739
+WHERE Semesters_id=2 
+AND course_name LIKE '%programming%';
+
+SELECT ects_credits
+FROM courses
+WHERE course_code='ICD0007';
+
+SELECT course_code, course_name, ects_credits, old_credits 
+FROM courses_201739
+WHERE ects_credits >= 5;
+
+SELECT D.student_name, D.student_code, C.course_code, C.ects_credits
+FROM declarations_201739 D LEFT JOIN courses_201739 C ON D.Courses_id=C.ID
+
+SELECT D.student_name, D.student_code, C.course_code, C.ects_credits
+FROM declarations_201739 D LEFT JOIN courses_201739 C ON D.Courses_id=C.ID
+ORDER BY ects_credits DESC, student_name ASC;
+
+SELECT D.student_code, D.semesters_id, SUM(C.ects_credits)
+FROM declarations_201739 D LEFT JOIN courses_201739 C ON D.Courses_id=C.ID
+GROUP BY D.student_code, D.semesters_id
+ORDER BY D.student_code DESC;
+
+SELECT COUNT(*) as number_of_subjects
+FROM declarations_201739
+WHERE semesters_id=1;
+
+DROP TABLE test_201739;
+
+exit;
