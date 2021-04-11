@@ -13,6 +13,7 @@ function listCourses($link, $semester, $search, $column, $order, $reset)
     $search = sanitizeInputVar($link, $search);
     $column = sanitizeInputVar($link, $column);
     $order = sanitizeInputVar($link, $order);
+    $isAsc = isset($_GET['order'])? (bool) $_GET['order']: 1;
     if (!empty($reset)) {
         setcookie("search", null, -1);
         $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
@@ -40,12 +41,12 @@ function listCourses($link, $semester, $search, $column, $order, $reset)
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
             FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID 
             WHERE (C.course_code LIKE '%" . $search . "%' OR C.course_name LIKE '%" . $search . "%')
-            ORDER BY " . $column . " " . $order;
+            ORDER BY " . $column . " " . ($isAsc?"ASC":"DESC");
         }
     } else {
         if (!empty($column)) {
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
-                FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY " . $column . " " . $order;
+                FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY " . $column . " " . ($isAsc?"ASC":"DESC");
         } else {
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
                 FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY course_code ASC";
@@ -54,12 +55,13 @@ function listCourses($link, $semester, $search, $column, $order, $reset)
     $query = $link->prepare($query);
     $query->execute();
     $query->bind_result($course_code, $course_name, $ects_credits, $semester_name);
+    $param = isset($_GET['order'])?!$_GET['order']:1;
     echo "<table>";
     echo "<tr>
-    <th><a href=index.php?column=course_code&order=ASC>Course Code</a></th>
-    <th><a href=index.php?column=course_name&order=ASC>Course Name</a></th>
-    <th><a href=index.php?column=ects_credits&order=ASC>Credits</a></th>
-    <th><a href=index.php?column=semester_name&order=ASC>Semester</a></th>
+    <th><a href=index.php?column=course_code&order=" . $param . ">Course Code</a></th>
+    <th><a href=index.php?column=course_name&order=" . $param . ">Course Name</a></th>
+    <th><a href=index.php?column=ects_credits&order=" . $param . ">Credits</a></th>
+    <th><a href=index.php?column=semester_name&order=" . $param . ">Semester</a></th>
     </tr>";
     while ($query->fetch()) {
         printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $course_code, $course_name, $ects_credits, $semester_name);
