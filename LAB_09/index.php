@@ -18,41 +18,54 @@ function listCourses($link, $semester, $search, $column, $order, $reset)
         setcookie("search", null, -1);
         $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
         FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY course_code ASC";
+        $query = $link->prepare($query);
     } else if (!empty($search)) {
         setcookie("search", $search, '/~edvess/');
         $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
         FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID
-        WHERE (C.course_code LIKE '%" . $search . "%' OR C.course_name LIKE '%" . $search . "%')";
+        WHERE (C.course_code LIKE ? OR C.course_name LIKE ?)";
+        $query = $link->prepare($query);
+        $search = "%". $search . "%";
+        $query->bind_param("ss", $search, $search);
     } else if (!empty($semester)) {
         if (isset($_COOKIE['search'])) {
             $search = $_COOKIE['search'];
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name
             FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID 
-            WHERE C.Semesters_ID='$semester' 
-            AND (C.course_code LIKE '%" . $search . "%' OR C.course_name LIKE '%" . $search . "%')";
+            WHERE C.Semesters_ID=? 
+            AND (C.course_code LIKE ? OR C.course_name LIKE ?)";
+            $query = $link->prepare($query);
+            $search = "%". $search . "%";
+            $query->bind_param("iss", $semester, $search, $search);
         } else {
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
             FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID 
-            WHERE C.Semesters_ID='$semester'";
+            WHERE C.Semesters_ID=?";
+            $query = $link->prepare($query);
+            $query->bind_param("i", $semester);
         }
     } else if (isset($_COOKIE['search'])) {
         if (!empty($column)) {
             $search = $_COOKIE['search'];
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
             FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID 
-            WHERE (C.course_code LIKE '%" . $search . "%' OR C.course_name LIKE '%" . $search . "%')
+            WHERE (C.course_code LIKE ? OR C.course_name LIKE ?)
             ORDER BY " . $column . " " . ($isAsc?"ASC":"DESC");
+            $query = $link->prepare($query);
+            $search = "%". $search . "%";
+            $query->bind_param("ss", $search, $search);
         }
     } else {
         if (!empty($column)) {
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
-                FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY " . $column . " " . ($isAsc?"ASC":"DESC");
+            FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY " . $column . " " . ($isAsc?"ASC":"DESC");
+            $query = $link->prepare($query);
         } else {
             $query = "SELECT C.course_code, C.course_name, C.ects_credits, S.semester_name 
-                FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY course_code ASC";
+            FROM courses_201739 C LEFT JOIN semesters_201739 S ON C.Semesters_ID=S.ID ORDER BY course_code ASC";
+            $query = $link->prepare($query);
         }
     }
-    $query = $link->prepare($query);
     $query->execute();
     $query->bind_result($course_code, $course_name, $ects_credits, $semester_name);
     $param = isset($_GET['order'])?!$_GET['order']:1;
