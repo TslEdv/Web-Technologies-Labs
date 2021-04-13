@@ -18,11 +18,19 @@ function checkCookie() {
     if (person != "") {
         document.getElementById("title").innerHTML = person + "'s Shopping List";
         var x = localStorage.length;
+        if(localStorage[getCookie("username")+"4"] == null){
+            document.write("amen");
+        }
         if (x != 0) {
             for (var i = 0; i < x; i++) {
                 var table = document.getElementById("shopping");
                 var length = table.rows.length;
-                var y = JSON.parse(localStorage[getCookie("username")+length]);
+                if(localStorage[getCookie("username")+length] != null){
+                    var y = JSON.parse(localStorage[getCookie("username")+length]);
+                } else{
+                    var y = JSON.parse(localStorage[getCookie("username")+(length+1)]);
+                    i++;
+                }
                 var row = table.insertRow(length);
                 row.setAttribute("onclick", "remove(" + length + ")");
                 var cell1 = row.insertCell(0);
@@ -58,12 +66,6 @@ function checkCookie() {
         }
     }
 }
-function delRow(e) {
-    if (e.target.matches('.delete')) {
-        let row = e.target.closest('tr');
-        row.remove();
-    }
-}
 function addShopping() {
     var table = document.getElementById("shopping");
     var length = table.rows.length;
@@ -78,11 +80,28 @@ function addShopping() {
     var product = '{"Product":' + '"' + document.getElementById("itemname").value + '", "Quantity":' + '"' + document.getElementById("quantity").value + '"}';
     var json = JSON.parse(product);
     localStorage.setItem(getCookie("username")+length, JSON.stringify(json));
+    location.reload();
 }
 function remove(lenght) {
     if (confirm("Are you sure you want to delete this item?")) {
         document.getElementById("shopping").deleteRow(lenght);
         localStorage.removeItem(getCookie("username")+lenght);
+        var x = localStorage.length;
+        if (x != 0) {
+            for (var i = 1; i < x+1; i++) {
+                if(localStorage[getCookie("username")+i] == null){
+                    if(localStorage[getCookie("username")+(i+1)] != null){
+                        localStorage[getCookie("username")+i] = localStorage[getCookie("username")+(i+1)];
+                        delete localStorage[getCookie("username")+(i+1)];
+                    }
+                }
+            }
+        }
+        location.reload();
     }
+}
+function logout(){
+    document.cookie = "username=Monkey; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    location.reload();
 }
 checkCookie();
