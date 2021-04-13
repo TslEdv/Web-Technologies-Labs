@@ -18,9 +18,6 @@ function checkCookie() {
     if (person != "") {
         document.getElementById("title").innerHTML = person + "'s Shopping List";
         var x = localStorage.length;
-        if(localStorage[getCookie("username")+"4"] == null){
-            document.write("amen");
-        }
         if (x != 0) {
             for (var i = 0; i < x; i++) {
                 var table = document.getElementById("shopping");
