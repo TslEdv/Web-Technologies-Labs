@@ -20,9 +20,9 @@ function checkCookie() {
         var x = localStorage.length;
         if (x != 0) {
             for (var i = 0; i < x; i++) {
-                var y = JSON.parse(localStorage[i+1]);
                 var table = document.getElementById("shopping");
                 var length = table.rows.length;
+                var y = JSON.parse(localStorage[getCookie("username")+length]);
                 var row = table.insertRow(length);
                 row.setAttribute("onclick", "remove(" + length + ")");
                 var cell1 = row.insertCell(0);
@@ -39,6 +39,22 @@ function checkCookie() {
             document.getElementById("title").innerHTML = person + "'s Shopping List";
             document.cookie = "username=" + person;
             sessionStorage.setItem("username", person);
+            var x = localStorage.length;
+            if (x != 0) {
+                for (var i = 0; i < x; i++) {
+                    var table = document.getElementById("shopping");
+                    var length = table.rows.length;
+                    var y = JSON.parse(localStorage[getCookie("username")+length]);
+                    var row = table.insertRow(length);
+                    row.setAttribute("onclick", "remove(" + length + ")");
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    cell1.innerHTML = length + ".";
+                    cell2.innerHTML = y.Product;
+                    cell3.innerHTML = y.Quantity;
+                }
+            }
         }
     }
 }
@@ -61,12 +77,12 @@ function addShopping() {
     cell3.innerHTML = document.getElementById("quantity").value;
     var product = '{"Product":' + '"' + document.getElementById("itemname").value + '", "Quantity":' + '"' + document.getElementById("quantity").value + '"}';
     var json = JSON.parse(product);
-    localStorage.setItem(length, JSON.stringify(json));
+    localStorage.setItem(getCookie("username")+length, JSON.stringify(json));
 }
 function remove(lenght) {
     if (confirm("Are you sure you want to delete this item?")) {
         document.getElementById("shopping").deleteRow(lenght);
-        localStorage.removeItem(lenght);
+        localStorage.removeItem(getCookie("username")+lenght);
     }
 }
 checkCookie();
