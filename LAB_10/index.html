@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <h1 id="title"></h1>
+    Item name: <input type="text" name="itemname" id="itemname"><br>
+    Quantity: <input type="number" name="quantity" id="quantity"><br><br>
+    <button type="button" onclick="addShopping(); document.getElementById('itemname').value = ''; document.getElementById('quantity').value = '';">Add Shopping</button>
+    <table id="shopping">
+        <tr>
+            <th>No.</th>
+            <th>Item</th>
+            <th>Quantity</th>
+        </tr>
+    </table>
+    <script type="text/javascript" src="script.js"></script>
+</body>
+
+</html>
