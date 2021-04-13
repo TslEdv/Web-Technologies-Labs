@@ -1,0 +1,30 @@
+table{
+	width: 600px;
+	border: 1px solid black;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+    font-size: 25px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+tr{
+	line-height: 40px;
+}
+tr:nth-child(odd){
+  background-color: white;
+}
+tr:nth-child(even){
+  background-color: lightgray;
+}
+th{
+	color: white;
+	background-color:green;
+}
+td{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+table tr:hover{
+	background-color:yellow;
+	border-bottom: 5px solid black;
+	border-top: 5px solid black;
+}
