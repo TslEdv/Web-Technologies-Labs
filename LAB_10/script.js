@@ -30,7 +30,6 @@ function addShopping() {
         var product = '{"Product":' + '"' + document.getElementById("itemname").value + '", "Quantity":' + '"' + document.getElementById("quantity").value + '"}';
         var json = JSON.parse(product);
         localStorage.setItem(sessionStorage.getItem("username") + length, JSON.stringify(json));
-        location.reload();
     }
 }
 function remove(lenght) {
@@ -47,8 +46,12 @@ function remove(lenght) {
                     }
                 }
             }
+            var table = document.getElementById("shopping");
+            var rows = table.rows.length;
+            for (var i = 0; i< rows; i++){
+                table.rows[i+1].cells[0].innerHTML = i+1+".";
+            }
         }
-        location.reload();
     }
 }
 function logout() {
@@ -127,7 +130,7 @@ if (person != "") {
                 }
             }
         }
-    } else{
+    } else {
         var person = "Unknown";
         document.getElementById("title").innerHTML = person + "'s Shopping List";
         document.cookie = "username=" + person + "; path=/~edvess/;";
