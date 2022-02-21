@@ -1,3 +1,5 @@
-# ICD0007_LAB_EDVIN
+# ICD0007 Labs
 
-My labs :)
+Based on the Labs of TalTech course Web Technologies.
+
+During the course we learned at least the fundamentals of HTML, CSS, PHP, Javascript and MySQL.
